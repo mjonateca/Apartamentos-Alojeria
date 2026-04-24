@@ -1,0 +1,722 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --stone: #C8B99A;
+    --stone-light: #EDE5D8;
+    --stone-dark: #8B7355;
+    --moss: #4A5240;
+    --moss-light: #6B7360;
+    --cream: #F7F3EE;
+    --charcoal: #2A2A2A;
+    --warm-white: #FDFAF6;
+    --gold: #B8986A;
+    --gold-light: #D4B48C;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(253,250,246,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,185,154,0.3);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--charcoal);
+    text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--moss);
+    color: var(--cream) !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(42,42,42,0.15) 0%, rgba(42,42,42,0.55) 100%);
+    z-index: 1;
+  }
+  .hero-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform-origin: center;
+    animation: heroZoom 12s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.04); }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    animation: fadeUp 1.2s ease-out;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 1.2rem;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em { font-style: italic; color: var(--stone); }
+  .hero-subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 2.5rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: #fff;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { background: var(--stone-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.6);
+    color: #fff;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+  .hero-scroll {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+  .hero-scroll span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .hero-scroll svg { width: 20px; height: 20px; stroke: rgba(255,255,255,0.5); fill: none; }
+
+  /* STRIP */
+  .trust-strip {
+    background: var(--moss);
+    padding: 1rem 3rem;
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--stone-light);
+  }
+  .trust-item svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; flex-shrink: 0; }
+
+  /* SECTION COMMONS */
+  section { padding: 6rem 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; line-height: 1.15;
+    color: var(--charcoal);
+  }
+  .section-title em { font-style: italic; color: var(--stone-dark); }
+  .section-body {
+    font-size: 0.95rem; line-height: 1.85;
+    color: #5A5248; margin-top: 1.2rem;
+    max-width: 56ch;
+  }
+  .divider {
+    width: 40px; height: 1px;
+    background: var(--gold); margin: 1.5rem 0;
+  }
+
+  /* HISTORIA */
+  .historia-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center; margin-top: 3rem;
+  }
+  .historia-img-wrap {
+    position: relative; overflow: hidden; border-radius: 3px;
+  }
+  .historia-img-wrap img {
+    width: 100%; height: 420px; object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .historia-img-wrap:hover img { transform: scale(1.03); }
+  .historia-img-accent {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 180px; height: 180px;
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+  .historia-badge {
+    position: absolute; top: 1.5rem; left: 1.5rem;
+    background: var(--moss);
+    color: var(--stone-light);
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.4rem 0.9rem; border-radius: 2px;
+  }
+
+  /* ALOJAMIENTOS */
+  .alojamientos-bg { background: var(--cream); }
+  .alojamientos-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;
+  }
+  .aloj-card {
+    background: #fff; border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(200,185,154,0.2);
+    transition: all 0.3s; cursor: pointer;
+    position: relative;
+  }
+  .aloj-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+  .aloj-card.featured { border-color: var(--gold); }
+  .aloj-badge {
+    position: absolute; top: 1rem; right: 1rem; z-index: 2;
+    background: var(--gold); color: #fff;
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; border-radius: 2px;
+  }
+  .aloj-img { width: 100%; height: 260px; object-fit: cover; display: block; }
+  .aloj-body { padding: 1.8rem; }
+  .aloj-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400;
+    margin-bottom: 0.4rem;
+  }
+  .aloj-sub {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .aloj-desc {
+    font-size: 0.88rem; line-height: 1.75; color: #5A5248;
+    margin-bottom: 1.2rem;
+  }
+  .aloj-amenidades {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;
+  }
+  .amenidad {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--cream); color: var(--moss);
+    padding: 0.3rem 0.7rem; border-radius: 2px;
+    border: 1px solid rgba(74,82,64,0.2);
+  }
+  .aloj-cta {
+    display: block; text-align: center;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    background: var(--moss); color: #fff;
+    padding: 0.85rem; text-decoration: none;
+    border-radius: 2px; transition: background 0.2s;
+  }
+  .aloj-cta:hover { background: var(--gold); }
+  .aloj-card.featured .aloj-cta { background: var(--gold); }
+  .aloj-card.featured .aloj-cta:hover { background: var(--stone-dark); }
+
+  /* GALERÍA */
+  .galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 280px 280px;
+    gap: 0.75rem;
+    margin-top: 3rem;
+  }
+  .galeria-item {
+    overflow: hidden; border-radius: 3px; position: relative;
+  }
+  .galeria-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .galeria-item:hover img { transform: scale(1.06); }
+  .galeria-item.large { grid-column: span 2; }
+
+  /* EXPERIENCIA */
+  .exp-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem;
+  }
+  .exp-card {
+    text-align: center; padding: 2rem 1.5rem;
+    border: 1px solid rgba(200,185,154,0.3); border-radius: 3px;
+    transition: border-color 0.25s;
+  }
+  .exp-card:hover { border-color: var(--gold); }
+  .exp-icon {
+    width: 48px; height: 48px; margin: 0 auto 1.2rem;
+    background: var(--cream); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .exp-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; }
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; margin-bottom: 0.7rem;
+  }
+  .exp-desc { font-size: 0.85rem; line-height: 1.7; color: #5A5248; }
+
+  /* REVIEWS */
+  .reviews-bg { background: var(--cream); }
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem;
+  }
+  .review-card {
+    background: #fff; padding: 1.8rem;
+    border-radius: 3px; border: 1px solid rgba(200,185,154,0.2);
+  }
+  .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 0.8rem; }
+  .review-text { font-size: 0.88rem; line-height: 1.75; color: #5A5248; font-style: italic; margin-bottom: 1rem; }
+  .review-author { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--moss); font-style: normal; }
+
+  /* CTA FINAL */
+  .cta-section {
+    background: var(--moss);
+    padding: 6rem 0; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-bg-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.15;
+    mix-blend-mode: luminosity;
+  }
+  .cta-content { position: relative; z-index: 1; }
+  .cta-label { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--stone); margin-bottom: 1rem; }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 300; color: #fff; line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .cta-title em { font-style: italic; color: var(--stone); }
+  .cta-sub { font-size: 0.88rem; color: rgba(255,255,255,0.65); margin-bottom: 2.5rem; letter-spacing: 0.05em; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* CONTACTO */
+  .contacto-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem;
+  }
+  .contacto-info-item {
+    display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;
+  }
+  .contacto-info-item svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; flex-shrink: 0; margin-top: 2px; }
+  .contacto-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone-dark); margin-bottom: 0.2rem; }
+  .contacto-value { font-size: 0.95rem; color: var(--charcoal); }
+  .contacto-value a { color: var(--charcoal); text-decoration: none; }
+  .contacto-value a:hover { color: var(--gold); }
+  .map-placeholder {
+    background: var(--stone-light); border-radius: 3px; height: 320px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.8rem; color: var(--stone-dark);
+    border: 1px solid rgba(200,185,154,0.3);
+  }
+  .map-placeholder svg { width: 40px; height: 40px; stroke: var(--gold); fill: none; }
+  .map-placeholder p { font-size: 0.85rem; letter-spacing: 0.05em; }
+  .map-placeholder a {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--moss); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 1px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    padding: 3rem 0; text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300;
+    color: var(--stone-light); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .footer-reg { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .footer-links a { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.65rem; color: rgba(255,255,255,0.2); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .historia-grid, .alojamientos-grid, .contacto-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-grid, .reviews-grid { grid-template-columns: 1fr; }
+    .galeria-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .galeria-item.large { grid-column: span 2; }
+    .trust-strip { gap: 1rem; padding: 1rem; }
+  }
+</style>
+
+<!-- HERO -->
+<nav>
+  <div class="nav-logo">Apartamentos <span>Alojería</span></div>
+  <ul class="nav-links">
+    <li><a href="#historia">Historia</a></li>
+    <li><a href="#alojamientos">Alojamientos</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="https://www.apartamentosalojeria.es/services-4" class="nav-cta">Reservar</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <img class="hero-img" src="https://static.wixstatic.com/media/3fd571_7d10413b4fbd40ae918ec938dc1a4b5d~mv2.jpg/v1/fill/w_1600,h_1000,q_90,enc_avif,quality_auto/3fd571_7d10413b4fbd40ae918ec938dc1a4b5d~mv2.jpg" alt="Fachada Apartamentos Alojería">
+  <div class="hero-content container">
+    <p class="hero-eyebrow">Béjar · Casco Histórico · Castilla y León</p>
+    <h1 class="hero-title">Un rincón <em>auténtico</em><br>en el corazón de Béjar</h1>
+    <p class="hero-subtitle">Antigua Judería Bejarana · Piedra, madera y alma</p>
+    <div class="hero-btns">
+      <a href="https://www.apartamentosalojeria.es/services-4" class="btn-primary">Reservar ahora</a>
+      <a href="#alojamientos" class="btn-secondary">Ver alojamientos</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Descubrir</span>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="1.5"/></svg>
+    <span>Reg. Turismo VuT 37/0683</span>
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-width="1.5"/><path d="M9 22V12h6v10" stroke-width="1.5"/></svg>
+    <span>Arquitectura original conservada</span>
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <span>Reserva directa · Sin comisiones</span>
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Atención personalizada</span>
+  </div>
+</div>
+
+<!-- HISTORIA -->
+<section id="historia">
+  <div class="container">
+    <div class="historia-grid">
+      <div class="historia-img-wrap">
+        <img src="https://static.wixstatic.com/media/3fd571_ceccd50a939c4a24974ccb4ece62d282~mv2.jpg/v1/fill/w_800,h_600,q_90,enc_avif,quality_auto/3fd571_ceccd50a939c4a24974ccb4ece62d282~mv2.jpg" alt="Historia Alojería">
+        <div class="historia-badge">S. XV — La Antigua Judería</div>
+        <div class="historia-img-accent"></div>
+      </div>
+      <div>
+        <p class="section-label">Nuestra historia</p>
+        <h2 class="section-title">Piedra que <em>habla</em>,<br>historia que se siente</h2>
+        <div class="divider"></div>
+        <p class="section-body">
+          En el corazón de la antigua Judería Bejarana, decidimos rescatar del olvido este espacio singular. Respetamos cada piedra, cada ladrillo, cada marca que los constructores originales dejaron como firma del tiempo.
+        </p>
+        <p class="section-body" style="margin-top:0.8rem;">
+          La fachada oeste, cubierta con teja árabe para protegerla de la lluvia, es nuestra seña de identidad. Hemos combinado materiales naturales con las mejores telas y accesorios para crear un hogar donde el pasado y el confort conviven en perfecta armonía.
+        </p>
+        <div style="margin-top: 2rem; display: flex; gap: 2rem;">
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--gold);">2</div>
+            <div style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--stone-dark);">Alojamientos</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--gold);">S.XV</div>
+            <div style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--stone-dark);">Origen del edificio</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--gold);">100%</div>
+            <div style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--stone-dark);">Materiales naturales</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria" style="padding-top:0; padding-bottom: 6rem;">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+      <div>
+        <p class="section-label">Galería de imágenes</p>
+        <h2 class="section-title">Conoce <em>cada rincón</em></h2>
+      </div>
+    </div>
+    <div class="galeria-grid">
+      <div class="galeria-item large">
+        <img src="https://static.wixstatic.com/media/3fd571_45829ace8c0b44da9be2097366d73f0e~mv2.jpg/v1/fill/w_1200,h_800,q_90,enc_avif,quality_auto/3fd571_45829ace8c0b44da9be2097366d73f0e~mv2.jpg" alt="Interior Alojería">
+      </div>
+      <div class="galeria-item">
+        <img src="https://static.wixstatic.com/media/3fd571_ad309ab844134d7f951a110aae84fb5f~mv2.jpg/v1/fill/w_600,h_600,q_90,enc_avif,quality_auto/3fd571_ad309ab844134d7f951a110aae84fb5f~mv2.jpg" alt="Recibidor Alojería">
+      </div>
+      <div class="galeria-item">
+        <img src="https://static.wixstatic.com/media/3fd571_d88cf171c9984c4181d19d791e460ddb~mv2.jpg/v1/fill/w_800,h_600,q_90,enc_avif,quality_auto/3fd571_d88cf171c9984c4181d19d791e460ddb~mv2.jpg" alt="Cocina Alojería">
+      </div>
+      <div class="galeria-item">
+        <img src="https://static.wixstatic.com/media/3fd571_99ed46912a4b4c90a74b7d949a46268e~mv2.jpg/v1/fill/w_800,h_600,q_90,enc_avif,quality_auto/3fd571_99ed46912a4b4c90a74b7d949a46268e~mv2.jpg" alt="Estudio Aloja">
+      </div>
+      <div class="galeria-item">
+        <img src="https://static.wixstatic.com/media/3fd571_cfb9095334ac4103ac7233eaeb41e0de~mv2.jpg/v1/fill/w_800,h_600,q_90,enc_avif,quality_auto/3fd571_cfb9095334ac4103ac7233eaeb41e0de~mv2.jpg" alt="Estudio Aloja interior">
+      </div>
+      <div class="galeria-item">
+        <img src="https://static.wixstatic.com/media/3fd571_edf17777f895411cbf803fc591e33467~mv2.jpg/v1/fill/w_800,h_600,q_90,enc_avif,quality_auto/3fd571_edf17777f895411cbf803fc591e33467~mv2.jpg" alt="Apartamento Alojería">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALOJAMIENTOS -->
+<section id="alojamientos" class="alojamientos-bg">
+  <div class="container">
+    <div style="text-align:center;max-width:600px;margin:0 auto;">
+      <p class="section-label">Elige tu espacio</p>
+      <h2 class="section-title">Dos alojamientos,<br><em>un mismo espíritu</em></h2>
+      <p class="section-body" style="margin: 1rem auto 0; text-align:center;">
+        Ambos conservan la esencia histórica del edificio. Elige el que mejor se adapte a tu forma de viajar.
+      </p>
+    </div>
+    <div class="alojamientos-grid">
+      <div class="aloj-card featured">
+        <div class="aloj-badge">El más elegido</div>
+        <img class="aloj-img" src="https://static.wixstatic.com/media/3fd571_d88cf171c9984c4181d19d791e460ddb~mv2.jpg/v1/fill/w_800,h_520,q_90,enc_avif,quality_auto/3fd571_d88cf171c9984c4181d19d791e460ddb~mv2.jpg" alt="Apartamento Alojería">
+        <div class="aloj-body">
+          <div class="aloj-name">Apartamento Alojería</div>
+          <div class="aloj-sub">Amplio · Elegante · Completo</div>
+          <p class="aloj-desc">El apartamento de referencia. Espacioso y sofisticado, con paredes de mampostería a la vista, cocina equipada y todas las comodidades para una estancia perfecta en el Casco Histórico.</p>
+          <div class="aloj-amenidades">
+            <span class="amenidad">Cocina completa</span>
+            <span class="amenidad">Baño privado</span>
+            <span class="amenidad">WiFi</span>
+            <span class="amenidad">Calefacción</span>
+            <span class="amenidad">Lencería incluida</span>
+          </div>
+          <a href="https://www.apartamentosalojeria.es/apartamento-alojería" class="aloj-cta">Ver disponibilidad</a>
+        </div>
+      </div>
+      <div class="aloj-card">
+        <img class="aloj-img" src="https://static.wixstatic.com/media/3fd571_99ed46912a4b4c90a74b7d949a46268e~mv2.jpg/v1/fill/w_800,h_520,q_90,enc_avif,quality_auto/3fd571_99ed46912a4b4c90a74b7d949a46268e~mv2.jpg" alt="Estudio Aloja">
+        <div class="aloj-body">
+          <div class="aloj-name">Estudio Aloja</div>
+          <div class="aloj-sub">Íntimo · Dinámico · Acogedor</div>
+          <p class="aloj-desc">Más compacto pero igual de cuidado. Perfecto para escapadas cortas o viajeros que buscan un espacio ágil, moderno y lleno de carácter en el entorno histórico de Béjar.</p>
+          <div class="aloj-amenidades">
+            <span class="amenidad">Cocina americana</span>
+            <span class="amenidad">Baño privado</span>
+            <span class="amenidad">WiFi</span>
+            <span class="amenidad">Calefacción</span>
+            <span class="amenidad">Lencería incluida</span>
+          </div>
+          <a href="https://www.apartamentosalojeria.es/estudio-aloja" class="aloj-cta">Ver disponibilidad</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+  <div class="container">
+    <div style="text-align:center;max-width:500px;margin:0 auto;">
+      <p class="section-label">Más allá del alojamiento</p>
+      <h2 class="section-title">La experiencia <em>completa</em></h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <div class="exp-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-width="1.5"/></svg>
+        </div>
+        <div class="exp-title">Patrimonio histórico</div>
+        <p class="exp-desc">Murallas medievales, el barrio textil, la judería... Béjar guarda siglos de historia a pocos pasos de tu puerta.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="exp-title">Naturaleza y deporte</div>
+        <p class="exp-desc">Sierra de Béjar, Sierra de Francia y Candelario. Rutas de senderismo, ciclismo y las vías verdes te esperan.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">
+          <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="exp-title">Gastronomía única</div>
+        <p class="exp-desc">El farinato, el hornazo y los productos de la Sierra. Una cocina castellana auténtica que conquista a quien la prueba.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-bg">
+  <div class="container">
+    <div style="text-align:center;">
+      <p class="section-label">Lo que dicen nuestros huéspedes</p>
+      <h2 class="section-title">Experiencias <em>reales</em></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Un alojamiento diferente a todo lo que hemos probado. La piedra, la madera, los detalles... nos transportó a otra época sin renunciar a ninguna comodidad."</p>
+        <span class="review-author">— María C. · Airbnb</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"La atención de los propietarios fue excepcional. Nos dieron recomendaciones perfectas de la zona. El apartamento, precioso y muy bien equipado."</p>
+        <span class="review-author">— Carlos & Lucía · Google</span>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Sitio único. La fachada con teja árabe y las paredes de mampostería lo hacen especial. Béjar desde dentro de su historia."</p>
+        <span class="review-author">— Javier M. · Booking</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <img class="cta-bg-img" src="https://static.wixstatic.com/media/3fd571_f2c92f8055ab41c7b1909328995ed1bf~mv2.jpg/v1/fill/w_1600,h_900,q_80,enc_avif,quality_auto/3fd571_f2c92f8055ab41c7b1909328995ed1bf~mv2.jpg" alt="">
+  <div class="container cta-content">
+    <p class="cta-label">Reserva directa sin intermediarios</p>
+    <h2 class="cta-title">Tu próxima escapada<br><em>ya tiene dirección</em></h2>
+    <p class="cta-sub">C/ Alojería, 23 Bajo · 37700 Béjar · Castilla y León</p>
+    <div class="cta-btns">
+      <a href="https://www.apartamentosalojeria.es/services-4" class="btn-primary">Ver disponibilidad</a>
+      <a href="tel:+34625066889" style="display:inline-block;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.4);color:#fff;padding:1rem 2.5rem;text-decoration:none;border-radius:2px;transition:all 0.25s;">Llamar ahora</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="contacto-grid">
+      <div>
+        <p class="section-label">¿Tienes alguna pregunta?</p>
+        <h2 class="section-title">Estamos para <em>ayudarte</em></h2>
+        <div class="divider"></div>
+        <div class="contacto-info-item">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke-width="1.5"/><circle cx="12" cy="10" r="3" stroke-width="1.5"/></svg>
+          <div>
+            <div class="contacto-label">Dirección</div>
+            <div class="contacto-value"><a href="https://maps.app.goo.gl/K48Ar1chzvmje8HM8">C/ Alojería, 23 Bajo · 37700 Béjar, Salamanca</a></div>
+          </div>
+        </div>
+        <div class="contacto-info-item">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014 10.79 19.79 19.79 0 01.92 2.18 2 2 0 012.92 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" stroke-width="1.5"/></svg>
+          <div>
+            <div class="contacto-label">Teléfono</div>
+            <div class="contacto-value"><a href="tel:+34625066889">+34 625 066 889</a></div>
+          </div>
+        </div>
+        <div class="contacto-info-item">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke-width="1.5"/></svg>
+          <div>
+            <div class="contacto-label">Email</div>
+            <div class="contacto-value"><a href="mailto:info@apartamentosalojeria.es">info@apartamentosalojeria.es</a></div>
+          </div>
+        </div>
+        <div style="margin-top:2rem;display:flex;gap:1rem;">
+          <a href="https://www.instagram.com/apartamentosalojeria" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid rgba(200,185,154,0.4);border-radius:3px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(200,185,154,0.4)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.facebook.com/ApartamentosAlojeria" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid rgba(200,185,154,0.4);border-radius:3px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(200,185,154,0.4)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke-width="1.5"/><circle cx="12" cy="10" r="3" stroke-width="1.5"/></svg>
+        <p style="font-size:0.9rem;font-weight:500;color:var(--charcoal);">C/ Alojería, 23 Bajo</p>
+        <p>37700 Béjar · Salamanca</p>
+        <a href="https://maps.app.goo.gl/K48Ar1chzvmje8HM8">Ver en Google Maps →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Apartamentos Alojería</div>
+  <div class="footer-reg">Vivienda Uso Turístico · Reg. CyL VuT 37/0683</div>
+  <div class="footer-links">
+    <a href="https://www.apartamentosalojeria.es/politicas">Política de privacidad</a>
+    <a href="https://www.apartamentosalojeria.es/reglamento-proteccion-datos">Protección de datos</a>
+    <a href="https://www.apartamentosalojeria.es/services-4">Reservas</a>
+    <a href="https://www.apartamentosalojeria.es/contacto">Contacto</a>
+  </div>
+  <div class="footer-copy">© 2024 Apartamentos Alojería · apartamentosalojeria.es — Web oficial</div>
+</footer>
